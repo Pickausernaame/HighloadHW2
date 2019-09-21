@@ -2,18 +2,16 @@ package application
 
 import (
 	"fmt"
-	"github.com/Pickausernaame/AvitoRandom/handlers"
-	"github.com/Pickausernaame/AvitoRandom/models"
+	"github.com/Pickausernaame/HighloadHW2/handlers"
 	"github.com/gin-gonic/gin"
 )
 
 type App struct {
-	Router  *gin.Engine
-	Handler *handlers.Handler
+	Router *gin.Engine
 }
 
 // Функция, создающая новое приложение
-func New(config *models.Config) (*App, error) {
+func New() (*App, error) {
 
 	a := &App{}
 	// Создаем новый роутер
@@ -23,18 +21,12 @@ func New(config *models.Config) (*App, error) {
 	a.Router.Use(gin.Logger())
 	a.Router.Use(gin.Recovery())
 
-	// Инициализируем хендлер и пробрасываем коннект к базе
-	h, err := handlers.New(config)
-	if err != nil {
-		return nil, err
-	}
-	a.Handler = h
-
 	// Объявляем эндпоинты и натравливаем на них хендлеры
 	api := a.Router.Group("/api")
 	{
-		api.POST("/generate", a.Handler.Generate)
-		api.GET("/retrieve/:id", a.Handler.Retrieve)
+		api.POST("/bar", handlers.Bar)
+		api.GET("/foo", handlers.Foo)
+		api.GET("/healthcheck", handlers.Healthcheck)
 	}
 	return a, nil
 }
