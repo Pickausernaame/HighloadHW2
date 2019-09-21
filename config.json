@@ -1,0 +1,8 @@
+{
+  "DatabaseHost":     "127.0.0.1",
+  "DatabasePort":     5432,
+  "DatabaseUser":     "sayonara",
+  "DatabasePassword": "boy",
+  "DatabaseSpace":    "random",
+  "ServerPort":       9090
+}
