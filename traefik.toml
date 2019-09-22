@@ -11,23 +11,39 @@
   [entryPoints.web]
     address = ":80"
 
+[metrics]
+  [metrics.prometheus]
+    buckets = [0.1,0.3,1.2,5.0]
+    addServicesLabels = true
+
 [http]
   [http.routers]
     [http.routers.router0]
       entryPoints = ["web"]
-      middlewares = ["add-api-prefix"]
+      middlewares = ["mainmw"]
       service = "testapi"
       rule = "Method(`GET`, `POST`)"
 
   [http.middlewares]
+    [http.middlewares.mainmw.chain]
+      middlewares = ["add-api-prefix","limit","test-retry"]
     [http.middlewares.add-api-prefix.addPrefix]
       prefix = "/api"
+    [http.middlewares.limit.buffering]
+      retryExpression = "(IsNetworkError() || ResponseCode() == 502) && Attempts() <= 3"
+    [http.middlewares.test-retry.retry]
+      attempts = 3
+
     [http.services]
       [http.services.testapi]
+        [http.services.testapi.loadBalancer.healthCheck]
+          path = "/api/healthcheck"
+          interval = "10s"
+          timeout = "5s"
         [http.services.testapi.loadBalancer]
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://104.197.153.254:9090"
+            url = "http://35.228.215.99:9090"
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://34.70.55.192:9090"
+            url = "http://35.228.75.3:9090"
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://34.68.181.57:9090"
+            url = "http://35.228.223.169:9090"
