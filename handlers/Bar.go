@@ -8,6 +8,6 @@ import (
 
 // Хендлер-функция, возвращающая значение генерации по id
 func Bar(c *gin.Context) {
-	time.Sleep(time.Duration(rand.Intn(3000)) * time.Millisecond)
+	time.Sleep(time.Duration(rand.Intn(300)) * time.Millisecond)
 	c.Status(201)
 }
