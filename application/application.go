@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Pickausernaame/HighloadHW2/handlers"
 	"github.com/gin-gonic/gin"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
 type App struct {
@@ -20,6 +21,10 @@ func New() (*App, error) {
 	// Подрубаем мидвары логер и рекавери
 	a.Router.Use(gin.Logger())
 	a.Router.Use(gin.Recovery())
+
+	p := ginprometheus.NewPrometheus("gin")
+
+	p.Use(a.Router)
 
 	// Объявляем эндпоинты и натравливаем на них хендлеры
 	api := a.Router.Group("/api")
