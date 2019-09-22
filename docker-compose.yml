@@ -3,4 +3,4 @@ services:
   highload:
     build: .
     ports:
-      - "9090:9090"
+      - "8088:9090"
