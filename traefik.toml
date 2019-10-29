@@ -42,8 +42,8 @@
           timeout = "5s"
         [http.services.testapi.loadBalancer]
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://35.228.215.99:9090"
+            url = "http://35.228.215.99:9099"
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://35.228.75.3:9090"
+            url = "http://35.228.75.3:9099"
           [[http.services.testapi.loadBalancer.servers]]
-            url = "http://35.228.223.169:9090"
+            url = "http://35.228.223.169:9099"
